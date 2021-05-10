@@ -13,7 +13,12 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   int progressValue = 70;
   var analytics = [
-    ['User visit',50],['New user',52]
+    ['User visit', 50],
+    ['New user', 52]
+  ];
+  var features = [
+    ['Premium Support'],
+    ['Newsletter services']
   ];
   @override
   Widget build(BuildContext context) {
@@ -24,14 +29,22 @@ class _BodyState extends State<Body> {
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
           TopInfoBar(),
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
           ProgressContainer(progressValue: progressValue),
-          Headings(name: "Analytics",),
+          Headings(
+            name: "Analytics",
+          ),
           Analytics(context),
-          Headings(name: "Features",),
-
+          Headings(
+            name: "Features",
+          ),
+          FeatureDetails(features: features),
         ],
       ),
       // bottomNavigationBar: AnimatedBottomNavigationBar(
@@ -47,36 +60,119 @@ class _BodyState extends State<Body> {
 
   SizedBox Analytics(BuildContext context) {
     return SizedBox(
-          height:MediaQuery.of(context).size.height*0.10,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: analytics.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context,index){
-                return Container(
+      height: MediaQuery.of(context).size.height * 0.10,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15),
+        child: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: analytics.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width * 0.70,
+              decoration: BoxDecoration(
+                  color: boxColor, borderRadius: BorderRadius.circular(25)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      analytics[index][0],
+                      style: kHeadStyle,
+                    ),
+                    Text(
+                      analytics[index][1].toString(),
+                      style: kHeadStyle.copyWith(color: Color(0xffc4c4c4)),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class FeatureDetails extends StatelessWidget {
+  const FeatureDetails({
+    Key key,
+    @required this.features,
+  }) : super(key: key);
+
+  final List<List<String>> features;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.20,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15),
+        child: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: features.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Stack(
+              children: [
+
+                Container(
                   margin: EdgeInsets.all(10),
-                  width: MediaQuery.of(context).size.width*0.70,
+                  width: MediaQuery.of(context).size.width * 0.70,
                   decoration: BoxDecoration(
-                    color: boxColor,
-                    borderRadius: BorderRadius.circular(25)
-                  ),
+                      color: (index == 0) ? purple : Color(0xFFFCEFE9),
+                      borderRadius: BorderRadius.circular(25)),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 30,right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(analytics[index][0],style: kHeadStyle,),
-                        Text(analytics[index][1].toString(),style: kHeadStyle.copyWith(color: Color(0xffc4c4c4)),)
+                        Text(
+                          features[index][0],
+                          style: kHeadStyle,
+                        ),
+                        Text("Free Feature"),
+                        GestureDetector(
+                          child: Container(
+                            height: 40,
+                            width:
+                                MediaQuery.of(context).size.width * 0.28,
+                            decoration: BoxDecoration(
+                                color:
+                                    (index == 0) ? darkPurple : rosegold,
+                                borderRadius: BorderRadius.circular(25)),
+                            child: Center(
+                              child: Text(
+                                'Feature Detail',
+                                style: kHeadStyle.copyWith(
+                                    fontSize: 15, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                );
-              },
-            ),
-          ),
-        );
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 40),
+                  child: Icon(
+                    Icons.bookmark,
+                    color:(index==0)?darkPurple:rosegold,
+                    size: 40,
+                  ),
+                ),
+              ],
+              alignment: Alignment.topRight,
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 
@@ -86,8 +182,12 @@ class Headings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.07,top: 15,bottom: 15),
-      child: Text(name,style: kHeadStyle.copyWith(color: Color(0xFF7B7E96),fontSize: 30),),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.07, top: 15, bottom: 15),
+      child: Text(
+        name,
+        style: kHeadStyle.copyWith(color: Color(0xFF7B7E96), fontSize: 30),
+      ),
     );
   }
 }
@@ -115,8 +215,14 @@ class ProgressContainer extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Website Completeness',style: kHeadStyle,),
-                  Text('$progressValue%',style: kHeadStyle,),
+                  Text(
+                    'Website Completeness',
+                    style: kHeadStyle,
+                  ),
+                  Text(
+                    '$progressValue%',
+                    style: kHeadStyle,
+                  ),
                 ],
               ),
             ),
@@ -138,14 +244,19 @@ class ProgressContainer extends StatelessWidget {
                   width: 130,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Color(0xffF5B714),
-                    borderRadius: BorderRadius.circular(25)
-                  ),
+                      color: Color(0xffF5B714),
+                      borderRadius: BorderRadius.circular(25)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Improve",style: kHeadStyle.copyWith(color: Colors.white),),
-                      Icon(Icons.arrow_forward_ios_rounded,color: Colors.white,)
+                      Text(
+                        "Improve",
+                        style: kHeadStyle.copyWith(color: Colors.white),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white,
+                      )
                     ],
                   ),
                 ),
@@ -154,7 +265,6 @@ class ProgressContainer extends StatelessWidget {
           ],
         ),
         decoration: BoxDecoration(
-            boxShadow: containerDecor,
             color: boxColor,
             borderRadius: BorderRadius.circular(15)),
       ),
@@ -180,21 +290,20 @@ class TopInfoBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Healthcare',
-                  style: kHeadStyle
-                ),
-                Text('http://healthcareeasyliv.com',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
+                Text('Healthcare', style: kHeadStyle),
+                Text(
+                  'http://healthcareeasyliv.com',
+                  style: TextStyle(fontSize: 20),
                 )
               ],
             ),
-            Image.asset('assets/logo.png',height: MediaQuery.of(context).size.height*0.08,)
+            Image.asset(
+              'assets/logo.png',
+              height: MediaQuery.of(context).size.height * 0.08,
+            )
           ],
         ),
         decoration: BoxDecoration(
-            boxShadow: containerDecor,
             color: boxColor,
             borderRadius: BorderRadius.circular(15)),
       ),
