@@ -10,6 +10,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  int progressValue = 70;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,47 +18,88 @@ class _BodyState extends State<Body> {
         backgroundColor: Color(0xFF4BD0D5),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 25,),
           TopInfoBar(),
           SizedBox(height: 25,),
-          Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.20,
-              width: MediaQuery.of(context).size.width * 0.90,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Website Completeness'),
-                        Text('70%'),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 10,
-                      child: FAProgressBar(
-                        currentValue: 80,
-                        progressColor: Color(0xFF4BD0D5),
-                        backgroundColor: Color(0xffc4c4c4),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              decoration: BoxDecoration(
-                  boxShadow: containerDecor,
-                  color: boxColor,
-                  borderRadius: BorderRadius.circular(15)),
-            ),
+          ProgressContainer(progressValue: progressValue),
+          SizedBox(height: 25,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Analytis",style: kHeadStyle.copyWith(color: Color(0xFF7B7E96),fontSize: 30),),
           )
         ],
+      ),
+    );
+  }
+}
+
+class ProgressContainer extends StatelessWidget {
+  const ProgressContainer({
+    Key key,
+    @required this.progressValue,
+  }) : super(key: key);
+
+  final int progressValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.20,
+        width: MediaQuery.of(context).size.width * 0.90,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Website Completeness',style: kHeadStyle,),
+                  Text('$progressValue%',style: kHeadStyle,),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 10,
+                child: FAProgressBar(
+                  currentValue: progressValue,
+                  progressColor: Color(0xFF4BD0D5),
+                  backgroundColor: Color(0xffc4c4c4),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                child: Container(
+                  width: 130,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Color(0xffF5B714),
+                    borderRadius: BorderRadius.circular(25)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Improve",style: kHeadStyle.copyWith(color: Colors.white),),
+                      Icon(Icons.arrow_forward_ios_rounded,color: Colors.white,)
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        decoration: BoxDecoration(
+            boxShadow: containerDecor,
+            color: boxColor,
+            borderRadius: BorderRadius.circular(15)),
       ),
     );
   }
@@ -82,10 +124,7 @@ class TopInfoBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Healthcare',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                  ),
+                  style: kHeadStyle
                 ),
                 Text('http://healthcareeasyliv.com',
                   style: TextStyle(

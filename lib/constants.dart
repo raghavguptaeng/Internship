@@ -8,3 +8,7 @@ var containerDecor = [
   ),
 ];
 var boxColor = Color(0xffFFEEEEEE);
+var kHeadStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold
+);
