@@ -118,9 +118,8 @@ class FeatureDetails extends StatelessWidget {
           itemBuilder: (context, index) {
             return Stack(
               children: [
-
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(20),
                   width: MediaQuery.of(context).size.width * 0.70,
                   decoration: BoxDecoration(
                       color: (index == 0) ? purple : Color(0xFFFCEFE9),
