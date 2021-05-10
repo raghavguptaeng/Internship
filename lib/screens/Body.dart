@@ -21,8 +21,8 @@ class _BodyState extends State<Body> {
       appBar: AppBar(
         backgroundColor: Color(0xFF4BD0D5),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 25,),
           TopInfoBar(),
@@ -30,7 +30,8 @@ class _BodyState extends State<Body> {
           ProgressContainer(progressValue: progressValue),
           Headings(name: "Analytics",),
           Analytics(context),
-          Headings(name: "Features",)
+          Headings(name: "Features",),
+
         ],
       ),
       // bottomNavigationBar: AnimatedBottomNavigationBar(
